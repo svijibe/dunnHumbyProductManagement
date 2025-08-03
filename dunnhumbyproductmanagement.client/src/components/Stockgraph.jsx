@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { Chart as ChartJS, defaults, ArcElement, Tooltip, Legend } from "chart.js/auto";
 import { Bar } from "react-chartjs-2";
 import { Pie } from 'react-chartjs-2';
-//import productData from "../data/productData.json";
 
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
@@ -16,6 +15,18 @@ function Stockgraph() {
     const [stocks, setStockQuantity] = useState();
     const [products, setProductOverPeriod] = useState();
 
+    async function populateProductData() {
+        const [response] = await Promise.all([
+            fetch('ProductsAPI/CategoryQuantity'),
+            fetch('ProductsAPI')
+        ]);
+        if (response.ok) {
+            const categoryQuantity = await response.json();
+            setStockQuantity(categoryQuantity.result);
+            setProductOverPeriod(categoryQuantity.result1[0]);
+        }
+    }
+
     useEffect(() => {
         populateProductData();
     }, []);
@@ -25,6 +36,7 @@ function Stockgraph() {
         :
         <div className="graphConainer">
             <div style={{ maxWidth: "500px" }} className="stocksDataCard">
+                {/*Stock Details*/}
                 <Pie
                     data={{
                         // Name of the variables on x-axies for each bar
@@ -74,7 +86,7 @@ function Stockgraph() {
                 />
             </div>
 
-
+            {/*Quantity Details*/}
             <div style={{ maxWidth: "500px" }} className="quantityDataCard">
                 <Bar
                     data={{
@@ -124,25 +136,13 @@ function Stockgraph() {
                     }}
                 />
             </div>
-        </div>
-        ;
+        </div>;
 
     return (
         <div className="conainer">
             {contents}
         </div>
     );
-    async function populateProductData() {
-        const [response] = await Promise.all([
-            fetch('ProductsAPI/CategoryQuantity'),
-            fetch('ProductsAPI')
-        ]);
-        if (response.ok) {
-            const categoryQuantity = await response.json();
-            setStockQuantity(categoryQuantity.result);
-            setProductOverPeriod(categoryQuantity.result1[0]);
-        }
-    }
 }
 
 export default Stockgraph;

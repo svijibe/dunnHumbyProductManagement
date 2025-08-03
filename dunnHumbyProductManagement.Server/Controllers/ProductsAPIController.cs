@@ -88,8 +88,6 @@ namespace ReactApp3.Server.Controllers
 
         //select Category, sum(StockQuantity) from [Products] group by Category ;
 
-
-
         //select count(CASE WHEN DateAdded >= DATETIME('now', '-7 days') Then Id END) AS ProductsThisWeek,
         //        count(CASE WHEN DateAdded >= DATETIME('now', '-30 days') Then Id END) AS ProductsThismonth,
         //       count(CASE WHEN DateAdded >= DATETIME('now', '-365 days') Then Id END) AS ProductsThisYear

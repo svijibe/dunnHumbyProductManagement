@@ -19,6 +19,17 @@ body {
     margin: 0 auto;
 }
 
+.graphConainer {
+    display: flex; /* Makes the container a flex container */
+    /* Optional: Add space between divs */
+    gap: 20px;
+}
+
+.stocksDataCard, .quantityDataCard {
+    /* You can set widths or let them adjust based on content */
+    flex: 1; /* Allows divs to grow and shrink proportionally */
+}
+
 /* Header Styles */
 .header {
     margin-top: 50px;

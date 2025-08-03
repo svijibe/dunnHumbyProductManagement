@@ -4,10 +4,24 @@ import './styles.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Stockgraph from './components/Stockgraph';
-
+import { format } from 'date-fns';
 
 function App() {
     const [products, setProducts] = useState();
+
+    async function populateProductData() {
+        const [response2] = await Promise.all([
+            fetch('ProductsAPI')
+        ]);
+        //if (response1.ok) {
+        //    const weatherResponse = await response1.json();
+        //    setForecasts(weatherResponse);
+        //}
+        if (response2.ok) {
+            const productResponse = await response2.json();
+            setProducts(productResponse.result);
+        }
+    }
 
     useEffect(() => {
         populateProductData();
@@ -37,7 +51,7 @@ function App() {
                         <td className="px-4 border-b border-gray-200 text-left"> <div className="!py-3 text-sm text-gray-900">{product.sku}</div></td>
                         <td className="px-4 border-b border-gray-200 text-left"> <div className="!py-3 text-sm text-gray-900">{product.price}</div></td>
                         <td className="px-4 border-b border-gray-200 text-left"> <div className="!py-3 text-sm text-gray-900">{product.category}</div></td>
-                        <td className="px-4 border-b border-gray-200 text-left"> <div className="!py-3 text-sm text-gray-900">{product.dateAdded}</div></td>  
+                        <td className="px-4 border-b border-gray-200 text-left"> <div className="!py-3 text-sm text-gray-900">{format(product.dateAdded, 'MMM dd, yyyy')}</div></td>  
                     </tr>
                 )}
             </tbody>
@@ -45,33 +59,15 @@ function App() {
         </div> ;
 
 
-
-
-    async function populateProductData() {
-        const [response2] = await Promise.all([
-            fetch('ProductsAPI')
-        ]);
-        //if (response1.ok) {
-        //    const weatherResponse = await response1.json();
-        //    setForecasts(weatherResponse);
-        //}
-        if (response2.ok) {
-            const productResponse = await response2.json();
-            setProducts(productResponse.result);
-        }
-    }
-
     return (
         <div className="App">
-
             <div className='container'>
                 <Header></Header>
                 {<h4 id="tableLabel">Available Products</h4>}
                 {contents}
-
-                <Stockgraph></Stockgraph>
-                <Footer></Footer>
             </div>
+            <Stockgraph></Stockgraph>
+            <Footer></Footer>
         </div>
     );
 }
