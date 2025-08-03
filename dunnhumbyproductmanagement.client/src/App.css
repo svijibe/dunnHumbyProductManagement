@@ -9,3 +9,13 @@ th, td {
     padding-left: 1rem;
     padding-right: 1rem;
 }
+
+.stocksDataCard, .quantityDataCard {
+    /* You can set widths or let them adjust based on content */
+    flex: 1; /* Allows divs to grow and shrink proportionally */
+}
+.graphConainer {
+    display: flex; /* Makes the container a flex container */
+    /* Optional: Add space between divs */
+    gap: 20px;
+}

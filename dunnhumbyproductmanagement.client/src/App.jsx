@@ -1,49 +1,73 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+//import './styles.css';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Stockgraph from './components/Stockgraph';
+
 
 function App() {
-    const [forecasts, setForecasts] = useState();
+    const [products, setProducts] = useState();
 
     useEffect(() => {
-        populateWeatherData();
+        populateProductData();
     }, []);
 
-    const contents = forecasts === undefined
+    const contents = products === undefined
         ? <p><em>Loading... Please refresh once the ASP.NET backend has started. See <a href="https://aka.ms/jspsintegrationreact">https://aka.ms/jspsintegrationreact</a> for more details.</em></p>
         : <table className="table table-striped" aria-labelledby="tableLabel">
             <thead>
                 <tr>
-                    <th>Date</th>
-                    <th>Temp. (C)</th>
-                    <th>Temp. (F)</th>
-                    <th>Summary</th>
+                    <th>Name</th>
+                    <th>Product Code</th>
+                    <th>StockQuantity</th>
+                    <th>SKU</th>
+                    <th>Price</th>
+                    <th>Category</th>
+                    <th>DateAdded</th> 
                 </tr>
             </thead>
             <tbody>
-                {forecasts.map(forecast =>
-                    <tr key={forecast.date}>
-                        <td>{forecast.date}</td>
-                        <td>{forecast.temperatureC}</td>
-                        <td>{forecast.temperatureF}</td>
-                        <td>{forecast.summary}</td>
+                {products.map(forecast =>
+                    <tr key={forecast.id}>
+                        <td>{forecast.name}</td>
+                        <td>{forecast.productCode}</td>
+                        <td>{forecast.stockQuantity}</td>
+                        <td>{forecast.sku}</td>
+                        <td>{forecast.price}</td>
+                        <td>{forecast.category}</td>
+                        <td>{forecast.dateAdded}</td>  
                     </tr>
                 )}
             </tbody>
         </table>;
 
+
     return (
-        <div>
-            <h1 id="tableLabel">Weather forecast</h1>
-            <p>This component demonstrates fetching data from the server.</p>
-            {contents}
+        <div className="App">
+
+            <div className='container'>
+                <Header></Header>
+                {<h4 id="tableLabel">Available Products</h4>}
+                {contents}
+            
+            <Stockgraph></Stockgraph>
+                <Footer></Footer>
+            </div>
         </div>
     );
-    
-    async function populateWeatherData() {
-        const response = await fetch('weatherforecast');
-        if (response.ok) {
-            const data = await response.json();
-            setForecasts(data);
+
+    async function populateProductData() {
+        const [response2] = await Promise.all([
+            fetch('ProductsAPI')
+        ]);
+        //if (response1.ok) {
+        //    const weatherResponse = await response1.json();
+        //    setForecasts(weatherResponse);
+        //}
+        if (response2.ok) {
+            const productResponse = await response2.json();
+            setProducts(productResponse.result);
         }
     }
 }

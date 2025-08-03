@@ -2,11 +2,14 @@
 using dunnHumbyProductManagement.Server.Data;
 using dunnHumbyProductManagement.Server.Models.Dto;
 using dunnHumbyProductManagement.Server.Models;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace dunnHumbyProductManagement.Server.Controllers
+using System;
+using System.Text.RegularExpressions;
+
+namespace ReactApp3.Server.Controllers
 {
     [Route("[controller]")]
     [ApiController]
