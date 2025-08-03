@@ -21,7 +21,7 @@ function Stockgraph() {
     }, []);
 
     const contents = stocks === undefined
-        ? <p><em>Loading... Please refresh once the ASP.NET backend has started. </em> </p>
+        ? <p><em>Loading graphs... Please refresh once the ASP.NET backend has started. </em> </p>
         :
         <div className="graphConainer">
             <div style={{ maxWidth: "500px" }} className="stocksDataCard">
