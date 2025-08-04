@@ -73,8 +73,6 @@ namespace ReactApp3.Server.Controllers
                         "count(CASE WHEN DateAdded >= DATETIME('now', '-365 days') Then Id END) AS productsThisYear" +
                         " from Products")
                     .ToList();
-
-
                 _response.Result = objList;
                 _response.Result1 = wmyResults;
             }

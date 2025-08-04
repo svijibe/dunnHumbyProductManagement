@@ -115,7 +115,7 @@ function Stockgraph() {
                     }}
                     // Height of graph
                     height={400}
-                    options={options}                    
+                    options={options}
                 />
             </div>
 
@@ -204,7 +204,7 @@ function Stockgraph() {
         </div>;
 
     return (
-        
+
         <div className="conainer">
             {contents}
         </div>
