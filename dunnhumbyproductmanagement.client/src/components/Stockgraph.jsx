@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Chart as ChartJS, defaults, ArcElement, Tooltip, Legend } from "chart.js/auto";
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+
 import { Bar } from "react-chartjs-2";
 import { Pie } from 'react-chartjs-2';
+
+
 
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
@@ -11,6 +15,7 @@ defaults.plugins.title.align = "start";
 defaults.plugins.title.font.size = 20;
 defaults.plugins.title.color = "black";
 
+//ChartJS.register(ChartDataLabels);
 function Stockgraph() {
     const [stocks, setStockQuantity] = useState();
     const [products, setProductOverPeriod] = useState();
@@ -31,6 +36,51 @@ function Stockgraph() {
         populateProductData();
     }, []);
 
+    const options = {
+        plugins: {
+            legend: {
+                position: 'bottom',
+            },
+            datalabels: {
+                display: 'auto',
+                color: '#fff',
+                font: {
+                    weight: 'bold',
+                    size: 14,
+                },
+                anchor: 'center',
+                align: 'center',
+                formatter: (value) => value,
+                clamp: true,
+            },
+            tooltip: {
+                callbacks: {
+                    label: (context) => {
+                        const label = context.label || '';
+                        const value = context.parsed;
+                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                        const percentage = ((value / total) * 100).toFixed(1);
+                        return `${label}: ${value} (${percentage}%)`;
+                    },
+                },
+            },
+            title: {
+                display: true,
+                text: 'Stocks/Category',
+                font: {
+                    size: 20,
+                    weight: 'bold',
+                },
+                padding: {
+                    top: 10,
+                    bottom: 30,
+                },
+                color: '#fff', // Optional: Customize title color
+                align: 'center', // center | start | end
+            },
+        },
+    };
+
     const contents = stocks === undefined
         ? <p><em>Loading graphs... Please refresh once the ASP.NET backend has started. </em> </p>
         :
@@ -44,7 +94,7 @@ function Stockgraph() {
                         datasets: [
                             {
                                 // Label for bars
-                                label: "Stock Quantity/Category",
+                                label: stocks.map((data) => data.category),
                                 // Data or value of your each variable
                                 data: stocks.map((data) => data.quantity),
                                 // Color of each bar
@@ -65,26 +115,10 @@ function Stockgraph() {
                     }}
                     // Height of graph
                     height={400}
-                    options={{
-                        maintainAspectRatio: false,
-                        scales: {
-                            yAxes: [
-                                {
-                                    ticks: {
-                                        // The y-axis value will start from zero
-                                        beginAtZero: true,
-                                    },
-                                },
-                            ],
-                        },
-                        legend: {
-                            labels: {
-                                fontSize: 15,
-                            },
-                        },
-                    }}
+                    options={options}                    
                 />
             </div>
+
 
             {/*Quantity Details*/}
             <div style={{ maxWidth: "500px" }} className="quantityDataCard">
@@ -95,7 +129,7 @@ function Stockgraph() {
                         datasets: [
                             {
                                 // Label for bars
-                                label: "Products Added",
+                                label: "Products added over the period",
                                 // Data or value of your each variable
                                 data: [products["productsThisWeek"], products["productsThisMonth"], products["productsThisYear"]],
                                 // Color of each bar
@@ -117,6 +151,22 @@ function Stockgraph() {
                     // Height of graph
                     height={400}
                     options={{
+                        plugins: {
+                            title: {
+                                display: true,
+                                text: 'Products over the period',
+                                font: {
+                                    size: 20,
+                                    weight: 'bold',
+                                },
+                                padding: {
+                                    top: 10,
+                                    bottom: 30,
+                                },
+                                color: '#fff', // Optional: Customize title color
+                                align: 'center', // center | start | end
+                            },
+                        },
                         maintainAspectRatio: false,
                         scales: {
                             yAxes: [
@@ -129,9 +179,24 @@ function Stockgraph() {
                             ],
                         },
                         legend: {
+                            position: 'bottom',
                             labels: {
                                 fontSize: 15,
                             },
+                        },
+                        title: {
+                            display: true,
+                            text: 'Products added over the period',
+                            font: {
+                                size: 20,
+                                weight: 'bold',
+                            },
+                            padding: {
+                                top: 10,
+                                bottom: 30,
+                            },
+                            color: '#fff', // Optional: Customize title color
+                            align: 'center', // center | start | end
                         },
                     }}
                 />
@@ -139,6 +204,7 @@ function Stockgraph() {
         </div>;
 
     return (
+        
         <div className="conainer">
             {contents}
         </div>

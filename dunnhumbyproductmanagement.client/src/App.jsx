@@ -66,6 +66,7 @@ function App() {
                 {<h4 id="tableLabel">Available Products</h4>}
                 {contents}
             </div>
+            <div> <br></br><br></br>  </div>
             <Stockgraph></Stockgraph>
             <Footer></Footer>
         </div>
