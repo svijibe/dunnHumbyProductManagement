@@ -23,11 +23,11 @@ https://github.com/svijibe/dunnHumbyProductManagement.git
     cd dunnHumbyProductManagement/dunnhumbyproductmanagement.client
 
 install packages in client application location with below commands
-npm install
-npm install chart.js react-chartjs-2
-npm install tailwindcss @tailwindcss/vite
-npm install date-fns
-npm install chartjs-plugin-datalabels
+npm install,
+npm install chart.js react-chartjs-2,
+npm install tailwindcss @tailwindcss/vite,
+npm install date-fns,
+npm install chartjs-plugin-datalabels,
 
 
 front end run in the below 
