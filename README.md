@@ -22,7 +22,7 @@ https://github.com/svijibe/dunnHumbyProductManagement.git
     git clone https://github.com/svijibe/dunnHumbyProductManagement.git
     cd dunnHumbyProductManagement/dunnhumbyproductmanagement.client
 
-install packages with below commands
+install packages in client application location with below commands
 npm install
 npm install chart.js react-chartjs-2
 npm install tailwindcss @tailwindcss/vite
