@@ -22,7 +22,7 @@ function Stockgraph() {
 
     async function populateProductData() {
         const [response] = await Promise.all([
-            fetch('ProductsAPI/CategoryQuantity'),
+            fetch('ProductsAPI/ProductsQuantityOverThePeriod'),
             fetch('ProductsAPI')
         ]);
         if (response.ok) {

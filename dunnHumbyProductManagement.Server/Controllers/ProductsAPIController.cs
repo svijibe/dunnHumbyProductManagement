@@ -56,8 +56,8 @@ namespace ReactApp3.Server.Controllers
         }
 
         [HttpGet]
-        [Route("CategoryQuantity")]
-        public ResponseDto GetProductQuantityByCategory()
+        [Route("ProductsQuantityOverThePeriod")]
+        public ResponseDto GetProductQuantityByCategoryOverthePeriod()
         {
             try
             {
